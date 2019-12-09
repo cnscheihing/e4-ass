@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Chat ASS</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>  
+        <div id="chat" class="container">
+        <h1>Chat ASS <small class="text-muted">· with a totally relevant Chuck Norris API integrated</small></h1>
+        {% if messages_list|count > 0 %}
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Username</th>
+                        <th scope="col">Message</th>
+                        <th scope="col">Timestamp</th>
+                    </tr>
+                </thead>     
+                <tbody>
+                    {% for message in messages_list %}
+                        <tr scope="row">
+                            <td>{{ message['username'] }}</td>
+                            <td>{{ message['text'] }}</td>
+                            <td>{{ message['timestamp'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col"></div>
+                <div id="number-pages" class="col-6">
+                    {% for number in range(page_count) %}
+                        <a href="/{{number + 1}}">{{ number + 1}}</a>
+                    {% endfor %}
+                </div>
+                <div class="col"></div>
+            </div> 
+        {% else %}
+            <p>No messages in the chat uwu.</p>
+        {% endif %}
+        <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.text_message.label }}<br>
+                    {{ form.text_message(size=32) }}
+                </p>
+                <p>{{ form.submit() }}</p>
+        </form>
+        </div>
+        <div id="api-section" class="container">
+            <h4>Your Chuck Norris joke of the day</h4>
+            <p>{{ chuck_norris_joke }}</p>
+        </div>
+    </body>
+</html>
