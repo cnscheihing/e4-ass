@@ -7,6 +7,7 @@ from faker import Faker
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
+from flask import jsonify
 
 SECRET_KEY = os.urandom(32)
 app = Flask(__name__)
@@ -41,6 +42,14 @@ def chat(page_number, messages_list=messages, page_count=ceil(len(messages)/5)):
     if form.validate_on_submit():
         messages.insert(0, {'username': fake.name(), 'text': form.text_message.data, 'timestamp': datetime.now()})
     return render_template('home.html', messages_list=list_cutter(messages_list, page_number), page_count=ceil(len(messages)/5), chuck_norris_joke=joke, form=form)
+
+@app.route("/getmessages", methods=['GET'])
+def getm(messages_list=messages):
+    return jsonify({messages: [messages_list]})
+
+@app.route("/deletemessages", methods=['DELETE'])
+def deletem(messages_list=messages):
+    return messages_list.delete()
 
 if __name__ == "__main__":
     app.run(debug=True)
