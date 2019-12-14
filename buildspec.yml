@@ -2,18 +2,37 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      java: openjdk11
+    commands:
+      - sudo apt-get update
+      - sudo apt-get install zip bc
+      - sudo curl -o /usr/local/bin/jq -L https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 && sudo chmod +x /usr/local/bin/jq
+      - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+      - sudo apt-get install -y nodejs
+      - sudo npm cache clean --force
+      - sudo npm install -g n
+      - sudo n stable
+      - sudo ln -sf /usr/local/bin/node /usr/bin/node
+      - sudo apt-get purge -y nodejs
+      - npm update -g npm
+      - npm -g install --unsafe-perm aws-sam-local
+      - python -m venv .
+      - . bin/activate
+      - pip install --upgrade pip
+      - pip install --upgrade awscli
+      - curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
+      - git clone https://github.com/sstephenson/bats.git
+      - cd bats
+      - sudo ./install.sh /usr/local
+      - cd ../
   pre_build:
     commands:
-      - echo Nothing to do in the pre_build phase...
+      - make install
+      - make localstack-up
   build:
     commands:
-      - echo Build started on `date`
-      - mvn install
+      - make test-unit
+      - make test-integ
   post_build:
     commands:
-      - echo Build completed on `date`
-artifacts:
-  files:
-    - target/messageUtil-1.0.jar
+      - make upload env=$ENV
+      - make deploy env=$ENV
