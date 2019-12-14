@@ -51,5 +51,9 @@ def getm(messages_list=messages):
 def deletem(messages_list=messages):
     return messages_list.delete()
 
+@app.route("/updatemessages", methods=['PATCH'])
+def updatem(messages_list=messages):
+    return messages_list.update()
+
 if __name__ == "__main__":
     app.run(debug=True)
