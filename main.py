@@ -1,6 +1,6 @@
 import requests
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from math import ceil
 from datetime import datetime
 from faker import Faker
@@ -45,15 +45,17 @@ def chat(page_number, messages_list=messages, page_count=ceil(len(messages)/5)):
 
 @app.route("/getmessages", methods=['GET'])
 def getm(messages_list=messages):
-    return jsonify({messages: [messages_list]})
+    return jsonify(messages_list)
 
 @app.route("/deletemessages", methods=['DELETE'])
-def deletem(messages_list=messages):
-    return messages_list.delete()
+def deletem():
+    messages.clear()
+    return jsonify(messages)
 
-@app.route("/updatemessages", methods=['PATCH'])
-def updatem(messages_list=messages):
-    return messages_list.update()
+@app.route("/addmessage", methods=['POST'])
+def updatem():
+    messages.insert(0, {'username': request.args.get('username'), 'text': request.args.get('text'), 'timestamp': datetime.now()})
+    return jsonify(messages)
 
 if __name__ == "__main__":
     app.run(debug=True)
