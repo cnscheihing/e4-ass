@@ -3,11 +3,20 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      java: openjdk11
+      python: 3.6
+  pre-build:
+    commands:
+      - apt-get update
+      - apt-get -y upgrade
+      - apt-get install xvfb python python-pip build-essential -y
+      - pip install --upgrade pip
+      - pip install flask
+      - pip install faker
+      - pip install flask_wtf
+      - pip install wtforms
   build:
     commands:
-      - java -version
-      - mvn package
+      - python3 main.py
 artifacts:
   files:
     - '**/*'
