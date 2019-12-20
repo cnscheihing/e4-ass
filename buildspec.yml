@@ -14,10 +14,10 @@ phases:
       - pip install faker
       - pip install flask_wtf
       - pip install wtforms
-  build:
-    commands:
-      - python3 main.py
-artifacts:
-  files:
-    - '**/*'
-  base-directory: 'target/my-web-app'
+  #build:
+  #  commands:
+  #    - python3 main.py
+#artifacts:
+#  files:
+#    - '**/*'
+#  base-directory: 'target/my-web-app'
