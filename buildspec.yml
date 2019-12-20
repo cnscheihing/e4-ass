@@ -4,7 +4,7 @@ phases:
   install:
     runtime-versions:
       python: 3.6
-  pre-build:
+  pre_build:
     commands:
       - apt-get update
       - apt-get -y upgrade
