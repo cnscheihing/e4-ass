@@ -1,0 +1,14 @@
+[
+  {
+    "ParameterKey": "KeyName",
+    "ParameterValue": "entrega_final_keypair"
+  },
+  {
+    "ParameterKey": "VpcId",
+    "ParameterValue": "vpc-b97e6bde"
+  },
+  {
+    "ParameterKey": "Subnets",
+    "ParameterValue": "subnet-aabd79cc,subnet-aabd79cc"
+  },
+]
