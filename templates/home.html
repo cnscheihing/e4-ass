@@ -47,10 +47,19 @@
                 </p>
                 <p>{{ form.submit() }}</p>
         </form>
+        
         </div>
+        <br>
+        <hr>
         <div id="api-section" class="container">
             <h4>Your Chuck Norris joke of the day</h4>
             <p>{{ chuck_norris_joke }}</p>
+        </div>
+        <br>
+        <hr>
+        <div class="container">
+            <h4>Your Chuck Norris meme<small class="text-muted">· directly to your browser from AWS CloudFront</small></h4>
+            <img src="http://dddmfzupep5io.cloudfront.net/memes/{{random_image}}.jpeg" alt="">
         </div>
     </body>
 </html>

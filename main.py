@@ -1,3 +1,4 @@
+import random
 import requests
 import os
 from flask import Flask, render_template, request
@@ -33,7 +34,7 @@ def home(messages_list=messages, page_count=ceil(len(messages)/5)):
     form = MessageForm()
     if form.validate_on_submit():
             messages.insert(0, {'username': fake.name(), 'text': form.text_message.data, 'timestamp': datetime.now()})
-    return render_template('home.html', messages_list=list_cutter(messages_list, 1), page_count=ceil(len(messages)/5), chuck_norris_joke=joke, form=form)
+    return render_template('home.html', messages_list=list_cutter(messages_list, 1), page_count=ceil(len(messages)/5), chuck_norris_joke=joke, form=form, random_image=random.randint(0, 9))
 
 @app.route("/<int:page_number>", methods=['GET', 'POST'])
 def chat(page_number, messages_list=messages, page_count=ceil(len(messages)/5)):
@@ -41,7 +42,7 @@ def chat(page_number, messages_list=messages, page_count=ceil(len(messages)/5)):
     form = MessageForm()
     if form.validate_on_submit():
         messages.insert(0, {'username': fake.name(), 'text': form.text_message.data, 'timestamp': datetime.now()})
-    return render_template('home.html', messages_list=list_cutter(messages_list, page_number), page_count=ceil(len(messages)/5), chuck_norris_joke=joke, form=form)
+    return render_template('home.html', messages_list=list_cutter(messages_list, page_number), page_count=ceil(len(messages)/5), chuck_norris_joke=joke, form=form, random_image=random.randint(0, 9))
 
 @app.route("/getmessages", methods=['GET'])
 def getm(messages_list=messages):
